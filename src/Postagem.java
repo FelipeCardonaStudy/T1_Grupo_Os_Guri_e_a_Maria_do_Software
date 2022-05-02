@@ -6,10 +6,10 @@ public class Postagem
     private Usuario usuario;
     private String data;
     private String texto;
-    private tagsPostagem tag;
+    private TagsPostagem tag;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public enum tagsPostagem
+    public enum TagsPostagem
     {
         Esportes, Comida, Filmes, Viagem, Animais
     }
@@ -21,7 +21,7 @@ public class Postagem
         this.texto = texto;
     }
 
-    public Postagem(Usuario usuario, String texto, tagsPostagem tag)
+    public Postagem(Usuario usuario, String texto, TagsPostagem tag)
     {
         this.usuario = usuario;
         this.data = formato.format(new Date());
@@ -71,11 +71,11 @@ public class Postagem
         this.texto = texto;
     }
 
-    public tagsPostagem getTag(){
+    public TagsPostagem getTag(){
         return tag;
     }
 
-    public void setTag(tagsPostagem tag){
+    public void setTag(TagsPostagem tag){
         this.tag = tag;
     }
 }
