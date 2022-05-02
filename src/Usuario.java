@@ -2,9 +2,13 @@ public class Usuario {
 
     private int identificao;
     private String nome;
-    private String funcao;
+    private FuncaoUsuario funcao;
 
-    public Usuario(int identificao, String nome, String funcao) {
+    public enum FuncaoUsuario {
+        Funcionario, Administrador
+    }
+
+    public Usuario(int identificao, String nome, FuncaoUsuario funcao) {
         this.identificao = identificao;
         this.nome = nome;
         this.funcao = funcao;
@@ -35,11 +39,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getFuncao() {
+    public FuncaoUsuario getFuncao() {
         return funcao;
     }
 
-    public void setFuncao(String funcao) {
+    public void setFuncao(FuncaoUsuario funcao) {
         this.funcao = funcao;
     }
 }
