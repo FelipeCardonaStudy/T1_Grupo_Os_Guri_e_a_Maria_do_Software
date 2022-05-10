@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -7,7 +8,14 @@ public class Postagem
     private String data;
     private String texto;
     private TagsPostagem tag;
+    private ArrayList<String> palavrasProibidas = new ArrayList<>();
+    private Autorizacao autorizacao;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    public enum Autorizacao
+    {
+        Autorizada, NaoAutorizada
+    }
 
     public enum TagsPostagem
     {
@@ -19,6 +27,18 @@ public class Postagem
         this.usuario = usuario;
         this.data = formato.format(new Date());
         this.texto = texto;
+        for(int i = 0; i<palavrasProibidas.size(); i++)
+        {
+            String temp = palavrasProibidas.get(i);
+            if(texto.toUpperCase().contains(temp.toUpperCase()))
+            {
+                autorizacao = Autorizacao.NaoAutorizada;
+            }
+        }
+        if(autorizacao == null)
+        {
+            autorizacao = Autorizacao.Autorizada;
+        }
     }
 
     public Postagem(Usuario usuario, String texto, TagsPostagem tag)
@@ -27,6 +47,18 @@ public class Postagem
         this.data = formato.format(new Date());
         this.texto = texto;
         this.tag = tag;
+        for(int i = 0; i<palavrasProibidas.size(); i++)
+        {
+            String temp = palavrasProibidas.get(i);
+            if(texto.toUpperCase().contains(temp.toUpperCase()))
+            {
+                autorizacao = Autorizacao.NaoAutorizada;
+            }
+        }
+        if(autorizacao == null)
+        {
+            autorizacao = Autorizacao.Autorizada;
+        }
     }
 
     @Override
@@ -78,4 +110,26 @@ public class Postagem
     public void setTag(TagsPostagem tag){
         this.tag = tag;
     }
+
+    public Autorizacao getAutorizacao() {
+        return autorizacao;
+    }
+
+    public void setAutorizacao(Autorizacao autorizacao) {
+        this.autorizacao = autorizacao;
+    }
+
+//    Parte do código que adiciona palavras proibidas em uma arraylist, porém não temos usuário ativo ainda.
+//    Fazer o if quando tivermos o usuario ativo e testar se ele é administrador, caso seja, sera possivel adicionar palavras.
+//
+//    public boolean addPalavraProibida(String palavra)
+//    {
+//        if()
+//        {
+//            palavrasProibidas.add(palavra);
+//            return true;
+//        }
+//        return false;
+//    }
+
 }
