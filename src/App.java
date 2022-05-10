@@ -1,9 +1,13 @@
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
 
+    Dados dados;
+
     public void executa() {
-        Dados dados = new Dados();
+        dados = new Dados();
         // TODO (pré-cadastro)
 
         //if (menuUsuario(dados) == true) {
@@ -21,7 +25,7 @@ public class App {
             System.out.println("1: Escolher o usuário que está ativo.");
             System.out.println("2: Listar todas as postagens.");
             System.out.println("3: Excluir postagens ou comentários.");
-            System.out.println("4: Pesqisar postagens ou comentários a partir de TAGS ou palavras-chave.");
+            System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
             System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
             System.out.println("6: Encerrar o programa.");
 
@@ -59,7 +63,21 @@ public class App {
     }
 
     private void escolheUsuarioAtivo(){
-        // TODO
+        System.out.println("Digite o nome do usuário: ");
+        Scanner teclado = new Scanner(System.in);
+
+        int identificadorUsuario = teclado.nextInt();
+
+        for (int i = 0; i < dados.usuarios.size(); i++){
+            if (identificadorUsuario == dados.usuarios.get(i).getIdentificao()) {
+                dados.usuarioAtivo = dados.usuarios.get(i);
+            }
+        }
+        if (dados.usuarioAtivo != null){
+            System.out.println("Usuário ativo: " + dados.usuarioAtivo);
+        } else {
+            System.out.println("Usuário não encontrado.");
+        }
     }
 
     public void listaPostagens(){
