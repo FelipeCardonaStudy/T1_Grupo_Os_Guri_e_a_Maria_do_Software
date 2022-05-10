@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -8,7 +9,7 @@ public class Postagem
     private String data;
     private String texto;
     private TagsPostagem tag;
-    private ArrayList<String> palavrasProibidas = new ArrayList<>();
+    private ArrayList<String> palavrasProibidas = new ArrayList<>(Arrays.asList("Merda"));
     private Autorizacao autorizacao;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
