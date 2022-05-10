@@ -5,12 +5,15 @@ import java.text.SimpleDateFormat;
 
 public class Postagem
 {
+    private static int count = 1;
+
     private Usuario usuario;
     private String data;
     private String texto;
     private TagsPostagem tag;
     private ArrayList<String> palavrasProibidas = new ArrayList<>(Arrays.asList("Merda"));
     private Autorizacao autorizacao;
+    private int identificador;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     public enum Autorizacao
@@ -40,6 +43,8 @@ public class Postagem
         {
             autorizacao = Autorizacao.Autorizada;
         }
+        identificador = count;
+        count++;
     }
 
     public Postagem(Usuario usuario, String texto, TagsPostagem tag)
@@ -60,6 +65,8 @@ public class Postagem
         {
             autorizacao = Autorizacao.Autorizada;
         }
+        identificador = count;
+        count++;
     }
 
     @Override
@@ -118,6 +125,13 @@ public class Postagem
 
     public void setAutorizacao(Autorizacao autorizacao) {
         this.autorizacao = autorizacao;
+    }
+
+    public int getIdentificador() {
+        return identificador;
+    }
+    public void setIdentificador(int identificador){
+        this.identificador = identificador;
     }
 
 //    Parte do código que adiciona palavras proibidas em uma arraylist, porém não temos usuário ativo ainda.
