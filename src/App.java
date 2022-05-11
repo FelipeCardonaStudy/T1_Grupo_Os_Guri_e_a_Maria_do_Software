@@ -14,60 +14,48 @@ public class App {
     }
 
     private void menuOperacoes() throws IOException {
+        apresentaMenuOperacoes();
         Scanner teclado = new Scanner(System.in);
-        int acao = 7; //criar a variavel acao com um valor que faca com que o while seja executado
+        String acao;
+        boolean escolhaValida;
 
-        while (acao != 6) {
-            System.out.println("Digite o número que corresponde à ação desejada: ");
-            System.out.println("1: Escolher o usuário que está ativo.");
-            System.out.println("2: Listar todas as postagens.");
-            System.out.println("3: Excluir postagens ou comentários.");
-            System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
-            System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
-            System.out.println("6: Encerrar o programa.");
-
-            //garantir que seja digitado um valor valido, um numero entre 1 e 6
-            boolean isNumber;
-            do {
-                if (teclado.hasNextInt()) {
-                    acao = teclado.nextInt();
-                    isNumber = true;
-                    if (acao == 6) {
-                        break;
-                    }
-                    if (acao < 1 || acao > 6) {
-                        System.out.println("Valor digitado inválido, digite um número que corresponda à ação desejada: ");
-                        isNumber = false;
-                    }
-                } else {
-                    System.out.println("Valor digitado inválido, digite um número que corresponda à ação desejada: ");
-                    isNumber = false;
-                    teclado.next();
-                }
-            } while (!isNumber);
-
-            while (acao <= 5) {
-                switch (acao) {
-                    case 1: 
-                        escolheUsuarioAtivo();
-                        break;
-                    case 2: 
-                        listaPostagens();
-                        break;
-                    case 3: 
-                        excluiPostagem();
-                        break;
-                    case 4: 
-                        pesquisaPostagem();
-                        break;
-                    case 5: 
-                        dados.toCSV();
-
-                        break;
-                }
-                acao = 7; // mudar o valor da variavel acao para retornar para o loop do menu
+        do{
+            acao = teclado.nextLine();
+            escolhaValida= true;
+            switch (acao) {
+                case "1":
+                    escolheUsuarioAtivo();
+                    break;
+                case "2":
+                    listaPostagens();
+                    break;
+                case "3":
+                    excluiPostagem();
+                    break;
+                case "4":
+                    pesquisaPostagem();
+                    break;
+                case "5":
+                    dados.toCSV();
+                    break;
+                case "6":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Valor digitado incorreto, tente novamente:");
+                    escolhaValida = false;
             }
-        }
+        }while(!escolhaValida);
+    }
+
+    public void apresentaMenuOperacoes(){
+        System.out.println("Digite o número que corresponde à ação desejada: ");
+        System.out.println("1: Escolher o usuário que está ativo.");
+        System.out.println("2: Listar todas as postagens.");
+        System.out.println("3: Excluir postagens ou comentários.");
+        System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
+        System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
+        System.out.println("6: Encerrar o programa.");
     }
 
     private void escolheUsuarioAtivo() {
