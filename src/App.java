@@ -47,11 +47,11 @@ public class App {
 
             while (acao <= 5) {
                 switch (acao) {
-                    case 1 -> escolheUsuarioAtivo();
-                    case 2 -> listaPostagens();
-                    case 3 -> excluiPostagem();
-                    case 4 -> pesquisaPostagem();
-                    case 5 -> salvaPostagensCSV();
+                    case 1: escolheUsuarioAtivo();
+                    case 2: listaPostagens();
+                    case 3: excluiPostagem();
+                    case 4: pesquisaPostagem();
+                    case 5: salvaPostagensCSV();
                 }
                 acao = 7; // mudar o valor da variavel acao para retornar para o loop do menu
             }
