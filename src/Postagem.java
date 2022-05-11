@@ -11,7 +11,7 @@ public class Postagem
     private String data;
     private String texto;
     private TagsPostagem tag;
-    private ArrayList<String> palavrasProibidas = new ArrayList<>(Arrays.asList("Merda"));
+    private static ArrayList<String> palavrasProibidas = new ArrayList<>(Arrays.asList("Merda"));
     private Autorizacao autorizacao;
     private int identificador;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -135,17 +135,21 @@ public class Postagem
         this.identificador = identificador;
     }
 
-//    Parte do código que adiciona palavras proibidas em uma arraylist, porém não temos usuário ativo ainda.
-//    Fazer o if quando tivermos o usuario ativo e testar se ele é administrador, caso seja, sera possivel adicionar palavras.
-//
-//    public boolean addPalavraProibida(String palavra)
-//    {
-//        if()
-//        {
-//            palavrasProibidas.add(palavra);
-//            return true;
-//        }
-//        return false;
-//    }
+
+    // IMPLEMENTAR O METODO NO MENU, VERIFICAR SWITCH PARA ADICIONAR MAIS OPCOES.
+    public static boolean addPalavraProibida(String palavra, Usuario user)
+    {
+        if(user.getFuncao() == Usuario.FuncaoUsuario.Administrador)
+        {
+            palavrasProibidas.add(palavra);
+            return true;
+        }
+        return false;
+    }
+
+    public static ArrayList<String> getPalavrasProibidas()
+    {
+        return palavrasProibidas;
+    }
 
 }
