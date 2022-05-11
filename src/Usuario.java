@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Usuario {
 
     private int identificao;
     private String nome;
     private FuncaoUsuario funcao;
+    private ArrayList<Postagem> postagensUsuario = new ArrayList<>();
 
     public enum FuncaoUsuario {
         Funcionario, Administrador
@@ -12,6 +15,18 @@ public class Usuario {
         this.identificao = identificao;
         this.nome = nome;
         this.funcao = funcao;
+    }
+
+    public void addPostagem(Postagem p){
+        postagensUsuario.add(p);
+    }
+
+    public ArrayList<Postagem> getPostagens(){
+        return postagensUsuario;
+    }
+
+    public int getQuantidadePostagens(){
+        return postagensUsuario.size();
     }
 
     @Override

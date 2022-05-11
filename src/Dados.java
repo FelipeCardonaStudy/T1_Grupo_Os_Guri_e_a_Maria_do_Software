@@ -39,8 +39,17 @@ public class Dados {
         addPost(p5);
         addPost(p6);
         addPost(p7);
-
         addPost(p8);
+
+        user1.addPostagem(p1);
+        user1.addPostagem(p2);
+        user2.addPostagem(p3);
+        user2.addPostagem(p4);
+        user3.addPostagem(p5);
+        user3.addPostagem(p6);
+        admin.addPostagem(p7);
+        user1.addPostagem(p8);
+
     }
 
     public boolean addPost(Postagem p){
