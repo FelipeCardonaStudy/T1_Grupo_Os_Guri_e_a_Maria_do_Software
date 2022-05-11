@@ -21,7 +21,7 @@ public class App {
             System.out.println("1: Escolher o usuário que está ativo.");
             System.out.println("2: Listar todas as postagens.");
             System.out.println("3: Excluir postagens ou comentários.");
-            System.out.println("4: Pesqisar postagens ou comentários a partir de TAGS ou palavras-chave.");
+            System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
             System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
             System.out.println("6: Encerrar o programa.");
 
@@ -69,11 +69,27 @@ public class App {
         }
     }
 
-    private void escolheUsuarioAtivo(){
-        // TODO
+    private void escolheUsuarioAtivo() {
+        System.out.println("Digite o identificador do usuário:");
+        Scanner teclado = new Scanner(System.in);
+
+        String identificadorUsuario = teclado.nextLine();
+        int identificadorUsuarioConvertido = Integer.parseInt(identificadorUsuario);
+
+        for (int i = 0; i < dados.usuarios.size(); i++) {
+            if (identificadorUsuarioConvertido == dados.usuarios.get(i).getIdentificao()) {
+                dados.usuarioAtivo = dados.usuarios.get(i);
+            }
+        }
+        if (dados.usuarioAtivo != null) {
+            System.out.println("Usuário ativo: " + dados.usuarioAtivo.getNome() + "\n");
+        } else {
+            System.out.println("Usuário não encontrado.");
+        }
     }
 
-    public void listaPostagens(){
+
+        public void listaPostagens(){
         // TODO
     }
 
