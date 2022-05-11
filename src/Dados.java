@@ -7,11 +7,14 @@ public class Dados {
     private Usuario[] user = new Usuario[MAX_SIZE_USERS];
     private Postagem[] post = new Postagem[MAX_SIZE_POSTS];
 
-
+    Usuario usuarioAtivo;
     ArrayList<Usuario> usuarios = new ArrayList<>(); //Arraylist de usuários.
     ArrayList<Postagem> pnao = new ArrayList<>(); //Arraylist de postagens não autorizadas.
     ArrayList<Postagem> psim = new ArrayList<>(); //Arraylist de postagens autorizadas.
 
+    public Dados() {
+        inicializa();
+    }
 
     public void inicializa(){
 
@@ -19,7 +22,6 @@ public class Dados {
         Usuario user1 = new Usuario(2,"Ciclano", Usuario.FuncaoUsuario.Funcionario);
         Usuario user2 = new Usuario(3,"Robson", Usuario.FuncaoUsuario.Funcionario);
         Usuario user3 = new Usuario(4,"Jaqueline", Usuario.FuncaoUsuario.Funcionario);
-
 
         Postagem p1 = new Postagem(user1,"Eu gosto de bananas!", Postagem.TagsPostagem.Comida); //Posts normais
         Postagem p2 = new Postagem(user1,"Vou adotar um papagaio.", Postagem.TagsPostagem.Animais);
@@ -31,6 +33,11 @@ public class Dados {
         Postagem p7 = new Postagem(admin,"Amanha será lançada uma atualizacao do aplicativo."); //Post admin
 
         Postagem p8 = new Postagem(user1,"Que dia merda."); // Post a ser proibido
+
+        usuarios.add(admin);
+        usuarios.add(user1);
+        usuarios.add(user2);
+        usuarios.add(user3);
 
         addPost(p1);
         addPost(p2);
