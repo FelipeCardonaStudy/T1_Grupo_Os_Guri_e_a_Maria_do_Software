@@ -1,9 +1,9 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
-
-    public void executa() {
-        Dados dados = new Dados();
+    Dados dados = new Dados();
+    public void executa() throws IOException {
         // TODO (pré-cadastro)
 
         //if (menuUsuario(dados) == true) {
@@ -12,7 +12,7 @@ public class App {
 
     }
 
-    private void menuOperacoes() {
+    private void menuOperacoes() throws IOException {
         Scanner teclado = new Scanner(System.in);
         int acao = 7; //criar a variavel acao com um valor que faca com que o while seja executado
 
@@ -60,7 +60,8 @@ public class App {
                         pesquisaPostagem();
                         break;
                     case 5: 
-                        salvaPostagensCSV();
+                        dados.toCSV();
+
                         break;
                 }
                 acao = 7; // mudar o valor da variavel acao para retornar para o loop do menu
