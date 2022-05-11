@@ -91,7 +91,10 @@ public class App {
 
 
     public void listaPostagens(){
-        // TODO
+        for(int i=dados.postagensAutorizadas.size()-1; i>-1; i--){
+            Postagem temp = dados.postagensAutorizadas.get(i);
+            System.out.println(temp.toString());
+        }
     }
 
     public void excluiPostagem(){
