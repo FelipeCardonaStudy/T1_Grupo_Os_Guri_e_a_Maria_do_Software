@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.*;
 
 public class Dados {
 
@@ -9,8 +10,8 @@ public class Dados {
 
 
     ArrayList<Usuario> usuarios = new ArrayList<>(); //Arraylist de usuários.
-    ArrayList<Postagem> pnao = new ArrayList<>(); //Arraylist de postagens não autorizadas.
-    ArrayList<Postagem> psim = new ArrayList<>(); //Arraylist de postagens autorizadas.
+    ArrayList<Postagem> postagensNaoAutorizadas = new ArrayList<>(); //Arraylist de postagens não autorizadas.
+    ArrayList<Postagem> postagensAutorizadas = new ArrayList<>(); //Arraylist de postagens autorizadas.
 
 
     public void inicializa(){
@@ -46,10 +47,10 @@ public class Dados {
     public boolean addPost(Postagem p){
 
         if(p.getAutorizacao() == Postagem.Autorizacao.NaoAutorizada){
-            pnao.add(p);
+            postagensNaoAutorizadas.add(p);
             return false;
         }
-        psim.add(p);
+        postagensAutorizadas.add(p);
         return true;
     }
 
@@ -76,6 +77,19 @@ public class Dados {
      */
     public String getUserNameByIndex(int index) {
         return user[index].getNome();
+    }
+
+    public void toCSV() throws IOException {
+        FileWriter fileWrt = new FileWriter("POSTAGENS.csv");
+        BufferedWriter bf = new BufferedWriter(fileWrt);
+        Postagem temp;
+        for(int i = 0; i < postagensAutorizadas.size(); i++){
+            //bf.write(String.valueOf(psim.get(i)));
+            temp = postagensAutorizadas.get(i);
+            String str = temp.toString();
+            bf.write(str);
+        }
+
     }
 
 }
