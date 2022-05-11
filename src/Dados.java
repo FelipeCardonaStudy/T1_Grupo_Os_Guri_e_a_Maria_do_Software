@@ -15,10 +15,10 @@ public class Dados {
 
     public void inicializa(){
 
-        Usuario admin = new Usuario(1, "Fulano", Usuario.FuncaoUsuario.Administrador);
-        Usuario user1 = new Usuario(2,"Ciclano", Usuario.FuncaoUsuario.Funcionario);
-        Usuario user2 = new Usuario(3,"Robson", Usuario.FuncaoUsuario.Funcionario);
-        Usuario user3 = new Usuario(4,"Jaqueline", Usuario.FuncaoUsuario.Funcionario);
+        Usuario admin = new Usuario("Fulano", Usuario.FuncaoUsuario.Administrador);
+        Usuario user1 = new Usuario("Ciclano", Usuario.FuncaoUsuario.Funcionario);
+        Usuario user2 = new Usuario("Robson", Usuario.FuncaoUsuario.Funcionario);
+        Usuario user3 = new Usuario("Jaqueline", Usuario.FuncaoUsuario.Funcionario);
 
 
         Postagem p1 = new Postagem(user1,"Eu gosto de bananas!", Postagem.TagsPostagem.Comida); //Posts normais
