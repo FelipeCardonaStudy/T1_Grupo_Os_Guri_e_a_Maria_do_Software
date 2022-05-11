@@ -8,11 +8,15 @@ public class Dados {
     private Usuario[] user = new Usuario[MAX_SIZE_USERS];
     private Postagem[] post = new Postagem[MAX_SIZE_POSTS];
 
+    Usuario usuarioAtivo;
 
     ArrayList<Usuario> usuarios = new ArrayList<>(); //Arraylist de usuários.
     ArrayList<Postagem> postagensNaoAutorizadas = new ArrayList<>(); //Arraylist de postagens não autorizadas.
     ArrayList<Postagem> postagensAutorizadas = new ArrayList<>(); //Arraylist de postagens autorizadas.
 
+    public Dados() {
+        inicializa();
+    }
 
     public void inicializa(){
 
@@ -21,6 +25,7 @@ public class Dados {
         Usuario user2 = new Usuario("Robson", Usuario.FuncaoUsuario.Funcionario);
         Usuario user3 = new Usuario("Jaqueline", Usuario.FuncaoUsuario.Funcionario);
 
+        usuarios.add(admin);usuarios.add(user1); usuarios.add(user2); usuarios.add(user3);
 
         Postagem p1 = new Postagem(user1,"Eu gosto de bananas!", Postagem.TagsPostagem.Comida); //Posts normais
         Postagem p2 = new Postagem(user1,"Vou adotar um papagaio.", Postagem.TagsPostagem.Animais);
