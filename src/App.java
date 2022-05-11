@@ -90,7 +90,7 @@ public class App {
     }
 
 
-        public void listaPostagens(){
+    public void listaPostagens(){
         // TODO
     }
 
