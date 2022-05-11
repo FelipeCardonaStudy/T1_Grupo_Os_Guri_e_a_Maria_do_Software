@@ -14,10 +14,6 @@ public class Dados {
     ArrayList<Postagem> postagensNaoAutorizadas = new ArrayList<>(); //Arraylist de postagens não autorizadas.
     ArrayList<Postagem> postagensAutorizadas = new ArrayList<>(); //Arraylist de postagens autorizadas.
 
-    public Dados() {
-        inicializa();
-    }
-
     public void inicializa(){
 
         Usuario admin = new Usuario("Fulano", Usuario.FuncaoUsuario.Administrador);
