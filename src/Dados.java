@@ -7,11 +7,15 @@ public class Dados {
     private Usuario[] user = new Usuario[MAX_SIZE_USERS];
     private Postagem[] post = new Postagem[MAX_SIZE_POSTS];
 
+    Usuario usuarioAtivo;
 
     ArrayList<Usuario> usuarios = new ArrayList<>(); //Arraylist de usuários.
     ArrayList<Postagem> pnao = new ArrayList<>(); //Arraylist de postagens não autorizadas.
     ArrayList<Postagem> psim = new ArrayList<>(); //Arraylist de postagens autorizadas.
 
+    public Dados() {
+        inicializa();
+    }
 
     public void inicializa(){
 
@@ -29,6 +33,7 @@ public class Dados {
         Postagem p6 = new Postagem(user3,"Hello World!! :)");
         Postagem p7 = new Postagem(admin,"Amanhã será lançada uma atualização do aplicativo.");
 
+        usuarios.add(admin);usuarios.add(user1);usuarios.add(user2);usuarios.add(user3);
 
     }
 
