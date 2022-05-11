@@ -1,5 +1,7 @@
 public class Usuario {
 
+    private static int count = 1;
+
     private int identificao;
     private String nome;
     private FuncaoUsuario funcao;
@@ -8,10 +10,11 @@ public class Usuario {
         Funcionario, Administrador
     }
 
-    public Usuario(int identificao, String nome, FuncaoUsuario funcao) {
-        this.identificao = identificao;
+    public Usuario(String nome, FuncaoUsuario funcao) {
         this.nome = nome;
         this.funcao = funcao;
+        identificao = count;
+        count++;
     }
 
     @Override
