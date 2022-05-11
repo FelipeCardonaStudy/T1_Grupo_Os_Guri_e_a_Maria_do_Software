@@ -5,6 +5,7 @@ public class App {
     Dados dados = new Dados();
     public void executa() throws IOException {
         // TODO (pré-cadastro)
+        dados.inicializa();
 
         //if (menuUsuario(dados) == true) {
             menuOperacoes();
