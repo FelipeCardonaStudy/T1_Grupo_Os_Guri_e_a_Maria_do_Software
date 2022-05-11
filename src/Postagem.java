@@ -15,6 +15,7 @@ public class Postagem
     private Autorizacao autorizacao;
     private int identificador;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private ArrayList<Comentario> comentarios = new ArrayList<>();
 
     public enum Autorizacao
     {
