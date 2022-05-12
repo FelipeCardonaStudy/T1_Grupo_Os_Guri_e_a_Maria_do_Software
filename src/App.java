@@ -1,15 +1,17 @@
 import java.io.IOException;
+import java.net.SocketPermission;
 import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
+
     public void executa() throws IOException {
         // TODO (pré-cadastro)
         dados.inicializa();
 
-        //if (menuUsuario(dados) == true) {
-            menuOperacoes();
-        //}
+        // if (menuUsuario(dados) == true) {
+        menuOperacoes();
+        // }
 
     }
 
@@ -18,7 +20,7 @@ public class App {
         String acao;
         boolean encerrarPrograma = false;
 
-        do{
+        do {
             apresentaMenuOperacoes();
             acao = teclado.nextLine();
             switch (acao) {
@@ -38,23 +40,27 @@ public class App {
                     dados.toCSV();
                     break;
                 case "6":
+                    adicionaAdmin();
+                    break;
+                case "7":
                     encerrarPrograma = true;
                     break;
                 default:
                     System.out.println("Valor digitado incorreto, tente novamente:");
                     break;
             }
-        }while(!encerrarPrograma);
+        } while (!encerrarPrograma);
     }
 
-    public void apresentaMenuOperacoes(){
+    public void apresentaMenuOperacoes() {
         System.out.println("Digite o número que corresponde à ação desejada: ");
         System.out.println("1: Escolher o usuário que está ativo.");
         System.out.println("2: Listar todas as postagens.");
         System.out.println("3: Excluir postagens ou comentários.");
         System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
-        System.out.println("6: Encerrar o programa.\n");
+        System.out.println("6: Adiciona funcao de administrador para usuario.");
+        System.out.println("7: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -76,24 +82,50 @@ public class App {
         }
     }
 
-
-    public void listaPostagens(){
-        for(int i=dados.postagensAutorizadas.size()-1; i>-1; i--){
+    public void listaPostagens() {
+        for (int i = dados.postagensAutorizadas.size() - 1; i > -1; i--) {
             Postagem temp = dados.postagensAutorizadas.get(i);
             System.out.println(temp.toString());
         }
     }
 
-    public void excluiPostagem(){
+    public void excluiPostagem() {
         // TODO
     }
 
-    public void pesquisaPostagem(){
+    public void pesquisaPostagem() {
         // TODO
     }
 
-    public void salvaPostagensCSV(){
+    public void salvaPostagensCSV() {
         // TODO
+    }
+
+    public void adicionaAdmin() {
+        if (dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador) {
+            System.out.println("---------------------------------");
+            System.out.println("Lista de usuarios para escolher:");
+            System.out.println("---------------------------------\n");
+            dados.mostraListaUsuarios();
+            Scanner teclado = new Scanner(System.in);
+            System.out.println("\nDigite o identificador do usuário:");
+            int identificadorUsuario = Integer.parseInt(teclado.nextLine());
+            Usuario usuario;
+
+            for (int i = 0; i < dados.usuarios.size(); i++) {
+                usuario = dados.usuarios.get(i);
+                if ((identificadorUsuario == usuario.getIdentificao())
+                        && (usuario.getFuncao() != Usuario.FuncaoUsuario.Administrador)) {
+                    usuario.setFuncao(Usuario.FuncaoUsuario.Administrador);
+                } else {
+                    System.out.println("Usuario nao encontrado ou ja eh administrador\n");
+                    break;
+                }
+            }
+
+        } else {
+            System.out.println("Voce nao tem permissao para adicionar usuarios.\n");
+        }
     }
 
     // Escreve lista de usuários do sistema

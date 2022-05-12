@@ -80,6 +80,12 @@ public class Dados {
         return user[index].getNome();
     }
 
+    public void mostraListaUsuarios() {
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.toString());
+        }
+    }
+
     public void toCSV() throws IOException {
         FileWriter fileWrt = new FileWriter("POSTAGENS.csv");
         BufferedWriter bf = new BufferedWriter(fileWrt);
