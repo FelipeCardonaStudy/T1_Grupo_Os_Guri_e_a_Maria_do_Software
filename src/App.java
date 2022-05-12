@@ -31,7 +31,19 @@ public class App {
                     listaPostagens();
                     break;
                 case "3":
-                    excluiPostagem();
+                    System.out.println("Digite o identificador da postagem que deseja excluir: ");
+                    int identificador = teclado.nextInt();
+                    teclado.nextLine();
+
+                    if (excluiPostagem(identificador) == true) {
+                        System.out.println("Postagem excluida com sucesso!");
+                        excluiPostagem(identificador);
+                        break;
+
+                    } else {
+                        System.out.println("Erro, não foi possível excluir a postagem");
+                    }
+
                     break;
                 case "4":
                     pesquisaPostagem();
@@ -89,8 +101,27 @@ public class App {
         }
     }
 
-    public void excluiPostagem() {
-        // TODO
+    // Método que faz a exclusão da postagem
+    public boolean excluiPostagem(int idPostagem) {
+
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++) {
+            Postagem p = dados.postagensAutorizadas.get(i);
+
+            if (dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+
+            } else if (dados.usuarioAtivo.getIdentificao() == p.getUsuario().getIdentificao()) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
     public void pesquisaPostagem() {
@@ -117,9 +148,6 @@ public class App {
                 if ((identificadorUsuario == usuario.getIdentificao())
                         && (usuario.getFuncao() != Usuario.FuncaoUsuario.Administrador)) {
                     usuario.setFuncao(Usuario.FuncaoUsuario.Administrador);
-                } else {
-                    System.out.println("Usuario nao encontrado ou ja eh administrador\n");
-                    break;
                 }
             }
 
