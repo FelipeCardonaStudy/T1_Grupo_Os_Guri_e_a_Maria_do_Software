@@ -241,18 +241,16 @@ public class App {
         System.out.println("Total de Usuarios: " + totalUsuarios);
         System.out.println("Top 5 usuarios com mais postagens: ");
         top5UsuariosPostagens();
-        System.out.println("Top 10 usuarios com mais comentarios: ");
+        System.out.println("\nTop 10 usuarios com mais comentarios: ");
         top10UsuariosComentarios();
-        System.out.println("Top 5 postagens mais comentadas: ");
+        System.out.println("\nTop 5 postagens mais comentadas: ");
         top5PostagensComentarios();
-
-
-    }
+        System.out.println("--------------------");
+        }
 
     public void top5UsuariosPostagens(){
         ArrayList<Usuario> usuariosOrdenados;
         usuariosOrdenados = dados.usuarios;
-        usuario.setCompara(0);
         Collections.sort(usuariosOrdenados); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
 
         int posicao = 1;
@@ -268,12 +266,11 @@ public class App {
     public void top10UsuariosComentarios(){
         ArrayList<Usuario> usuariosOrdenadosPorComentarios;
         usuariosOrdenadosPorComentarios = dados.usuarios;
-        usuario.setCompara(1);
         Collections.sort(usuariosOrdenadosPorComentarios);
 
         int posicao = 1;
         Usuario u;
-        for(int i = 0; i <= 10; i++){
+        for(int i = 0; i < 10; i++){
             u = usuariosOrdenadosPorComentarios.get(i);
             System.out.printf("\t%do Lugar: %s, %d comentario(s).\n", posicao, u.getNome(), u.getQntComentarios());
             posicao++;

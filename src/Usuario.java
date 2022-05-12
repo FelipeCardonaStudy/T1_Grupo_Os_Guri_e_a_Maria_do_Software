@@ -10,7 +10,6 @@ public class Usuario implements Comparable<Usuario>{
 
     private int qntComentarios = 0;
 
-    private int compara;
 
     public enum FuncaoUsuario {
         Funcionario, Administrador
@@ -76,18 +75,9 @@ public class Usuario implements Comparable<Usuario>{
         qntComentarios++;
     }
 
-    public void setCompara(int i){
-        compara = i;
-    }
 
     @Override
     public int compareTo(Usuario u) {
-        if(compara == 1) {
-            return (u.qntComentarios - this.qntComentarios);
-        }else if(compara == 0){
-            return (u.getQntPostagens() - this.getQntPostagens());
-        }
-
-        return -1;
+        return (u.getQntPostagens() - this.getQntPostagens());
     }
 }
