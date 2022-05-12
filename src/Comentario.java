@@ -12,6 +12,7 @@ public class Comentario{
         this.usuario = usuario;
         this.data = data;
         count++;
+        usuario.incrementaQntdComentarios();
     }
 
     public Comentario(){

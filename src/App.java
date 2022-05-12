@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +7,8 @@ import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
-    Comentario comentario = new Comentario();
+    private Comentario comentario = new Comentario();
+    private Usuario usuario = new Usuario();
 
     public void executa() throws IOException {
         // TODO (pré-cadastro)
@@ -242,28 +244,53 @@ public class App {
         System.out.println("Top 10 usuarios com mais comentarios: ");
         top10UsuariosComentarios();
         System.out.println("Top 5 postagens mais comentadas: ");
+        top5PostagensComentarios();
 
 
     }
 
     public void top5UsuariosPostagens(){
-        ArrayList<Usuario> usuariosOrdenados = new ArrayList<>();
+        ArrayList<Usuario> usuariosOrdenados;
         usuariosOrdenados = dados.usuarios;
+        usuario.setCompara(0);
         Collections.sort(usuariosOrdenados); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
+
         int posicao = 1;
-        Usuario u = new Usuario();
+        new Usuario();
+        Usuario u;
         for(int i = 0; i <= 5; i++){
             u = usuariosOrdenados.get(i);
-            System.out.printf("\t%do Lugar: %s, %d post(s)\n", posicao, u.getNome(), u.getQntPostagens());
+            System.out.printf("\t%do Lugar: %s, %d post(s).\n", posicao, u.getNome(), u.getQntPostagens());
             posicao++;
         }
     }
 
     public void top10UsuariosComentarios(){
+        ArrayList<Usuario> usuariosOrdenadosPorComentarios;
+        usuariosOrdenadosPorComentarios = dados.usuarios;
+        usuario.setCompara(1);
+        Collections.sort(usuariosOrdenadosPorComentarios);
 
+        int posicao = 1;
+        Usuario u;
+        for(int i = 0; i <= 10; i++){
+            u = usuariosOrdenadosPorComentarios.get(i);
+            System.out.printf("\t%do Lugar: %s, %d comentario(s).\n", posicao, u.getNome(), u.getQntComentarios());
+            posicao++;
+        }
     }
 
     public void top5PostagensComentarios(){
+        ArrayList<Postagem> postagensOrdenadasPorComentarios;
+        postagensOrdenadasPorComentarios = dados.postagensAutorizadas;
+        Collections.sort(postagensOrdenadasPorComentarios); //ordenar a lista de postagens em ordem DECRESCENTE de acordo com a uantidade de comentarios
 
+        int posicao = 1;
+        Postagem p = new Postagem();
+        for(int i = 0; i <= 5; i++){
+            p = postagensOrdenadasPorComentarios.get(i);
+            System.out.printf("\t%do Lugar: Identificador: %d (%d comentarios).\n", posicao, p.getIdentificador(), p.getQntdComentarios());
+            posicao++;
+        }
     }
 }

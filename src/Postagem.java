@@ -71,6 +71,10 @@ public class Postagem implements Comparable<Postagem>{
         usuario.incrementaQntdPostagens();
     }
 
+    public Postagem(){
+
+    }
+
     @Override
     public String toString() {
         if(tag == null)
