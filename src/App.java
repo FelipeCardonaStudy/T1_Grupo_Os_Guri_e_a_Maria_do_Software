@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.SocketPermission;
+import java.util.Date;
 import java.util.Scanner;
 
 public class App {
@@ -29,6 +30,15 @@ public class App {
                     break;
                 case "2":
                     listaPostagens();
+                    System.out.println("Deseja adicionar um comentario?");
+                    System.out.println("Se sim, digite 1");
+                    System.out.println("Se não, digite 2");
+
+                    int respostaTeclado = teclado.nextInt();
+
+                    if (respostaTeclado == 1) {
+                        adicionaComentario();
+                    }
                     break;
                 case "3":
                     System.out.println("Digite o identificador da postagem que deseja excluir: ");
@@ -172,4 +182,33 @@ public class App {
         return true;
     }
 
+    private void adicionaComentario(){
+        Scanner teclado = new Scanner (System.in);
+        System.out.println("Em qual postagem você deseja adicionar um comentário? (informar identificador da postagem)");
+        int idPostagemComentario = teclado.nextInt();
+
+        for (Postagem postagem : dados.postagensAutorizadas){
+            if (postagem.getIdentificador() == idPostagemComentario) {
+                System.out.println("Digite o comentário:");
+
+                String textoDoComentario = teclado.next();
+
+                boolean comentarioValido = true;
+
+                for (String palavraProibida : postagem.getPalavrasProibidas()) {
+                    if (textoDoComentario.contains(palavraProibida)){
+                        comentarioValido = false;
+                        System.out.println("Comentário inválido.\n");
+                    }
+                }
+
+                if (comentarioValido == true) {
+                    Comentario novoComentario = new Comentario(textoDoComentario, dados.usuarioAtivo, new Date());
+                    postagem.getComentarios().add(novoComentario);
+
+                    System.out.println("Comentário adicionado com sucesso.\n");
+                }
+            }
+        }
+    }
 }
