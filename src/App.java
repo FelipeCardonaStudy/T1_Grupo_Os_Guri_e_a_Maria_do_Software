@@ -3,13 +3,14 @@ import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
+
     public void executa() throws IOException {
         // TODO (pré-cadastro)
         dados.inicializa();
 
-        //if (menuUsuario(dados) == true) {
-            menuOperacoes();
-        //}
+        // if (menuUsuario(dados) == true) {
+        menuOperacoes();
+        // }
 
     }
 
@@ -18,7 +19,7 @@ public class App {
         String acao;
         boolean encerrarPrograma = false;
 
-        do{
+        do {
             apresentaMenuOperacoes();
             acao = teclado.nextLine();
             switch (acao) {
@@ -29,7 +30,19 @@ public class App {
                     listaPostagens();
                     break;
                 case "3":
-                    excluiPostagem();
+                    System.out.println("Digite o identificador da postagem que deseja excluir: ");
+                    int identificador = teclado.nextInt();
+                    teclado.nextLine();
+                    
+                    if (excluiPostagem(identificador) == true) {
+                        System.out.println("Postagem excluida com sucesso!");
+                        excluiPostagem(identificador);
+                        break;
+
+                    } else {
+                        System.out.println("Erro, não foi possível excluir a postagem");
+                    }
+
                     break;
                 case "4":
                     pesquisaPostagem();
@@ -44,10 +57,10 @@ public class App {
                     System.out.println("Valor digitado incorreto, tente novamente:");
                     break;
             }
-        }while(!encerrarPrograma);
+        } while (!encerrarPrograma);
     }
 
-    public void apresentaMenuOperacoes(){
+    public void apresentaMenuOperacoes() {
         System.out.println("Digite o número que corresponde à ação desejada: ");
         System.out.println("1: Escolher o usuário que está ativo.");
         System.out.println("2: Listar todas as postagens.");
@@ -76,23 +89,41 @@ public class App {
         }
     }
 
-
-    public void listaPostagens(){
-        for(int i=dados.postagensAutorizadas.size()-1; i>-1; i--){
+    public void listaPostagens() {
+        for (int i = dados.postagensAutorizadas.size() - 1; i > -1; i--) {
             Postagem temp = dados.postagensAutorizadas.get(i);
             System.out.println(temp.toString());
         }
     }
 
-    public void excluiPostagem(){
+    // Método que faz a exclusão da postagem
+    public boolean excluiPostagem(int idPostagem) {
+
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++) {
+            Postagem p = dados.postagensAutorizadas.get(i);
+
+            if (dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+
+            } else if (dados.usuarioAtivo.getIdentificao() == p.getUsuario().getIdentificao()) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public void pesquisaPostagem() {
         // TODO
     }
 
-    public void pesquisaPostagem(){
-        // TODO
-    }
-
-    public void salvaPostagensCSV(){
+    public void salvaPostagensCSV() {
         // TODO
     }
 
