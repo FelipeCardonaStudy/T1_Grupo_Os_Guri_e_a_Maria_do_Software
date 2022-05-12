@@ -3,25 +3,25 @@ import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
+
     public void executa() throws IOException {
         // TODO (pré-cadastro)
         dados.inicializa();
 
-        //if (menuUsuario(dados) == true) {
-            menuOperacoes();
-        //}
+        // if (menuUsuario(dados) == true) {
+        menuOperacoes();
+        // }
 
     }
 
     private void menuOperacoes() throws IOException {
-        apresentaMenuOperacoes();
         Scanner teclado = new Scanner(System.in);
         String acao;
-        boolean escolhaValida;
+        boolean encerrarPrograma = false;
 
-        do{
+        do {
+            apresentaMenuOperacoes();
             acao = teclado.nextLine();
-            escolhaValida= true;
             switch (acao) {
                 case "1":
                     escolheUsuarioAtivo();
@@ -30,7 +30,19 @@ public class App {
                     listaPostagens();
                     break;
                 case "3":
-                    excluiPostagem();
+                    System.out.println("Digite o identificador da postagem que deseja excluir: ");
+                    int identificador = teclado.nextInt();
+                    teclado.nextLine();
+                    
+                    if (excluiPostagem(identificador) == true) {
+                        System.out.println("Postagem excluida com sucesso!");
+                        excluiPostagem(identificador);
+                        break;
+
+                    } else {
+                        System.out.println("Erro, não foi possível excluir a postagem");
+                    }
+
                     break;
                 case "4":
                     pesquisaPostagem();
@@ -39,23 +51,23 @@ public class App {
                     dados.toCSV();
                     break;
                 case "6":
-                    System.exit(0);
+                    encerrarPrograma = true;
                     break;
                 default:
                     System.out.println("Valor digitado incorreto, tente novamente:");
-                    escolhaValida = false;
+                    break;
             }
-        }while(!escolhaValida);
+        } while (!encerrarPrograma);
     }
 
-    public void apresentaMenuOperacoes(){
+    public void apresentaMenuOperacoes() {
         System.out.println("Digite o número que corresponde à ação desejada: ");
         System.out.println("1: Escolher o usuário que está ativo.");
         System.out.println("2: Listar todas as postagens.");
         System.out.println("3: Excluir postagens ou comentários.");
         System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
-        System.out.println("6: Encerrar o programa.");
+        System.out.println("6: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -77,23 +89,41 @@ public class App {
         }
     }
 
-
-    public void listaPostagens(){
-        for(int i=dados.postagensAutorizadas.size()-1; i>-1; i--){
+    public void listaPostagens() {
+        for (int i = dados.postagensAutorizadas.size() - 1; i > -1; i--) {
             Postagem temp = dados.postagensAutorizadas.get(i);
             System.out.println(temp.toString());
         }
     }
 
-    public void excluiPostagem(){
+    // Método que faz a exclusão da postagem
+    public boolean excluiPostagem(int idPostagem) {
+
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++) {
+            Postagem p = dados.postagensAutorizadas.get(i);
+
+            if (dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+
+            } else if (dados.usuarioAtivo.getIdentificao() == p.getUsuario().getIdentificao()) {
+                if (idPostagem == p.getIdentificador()) {
+                    dados.postagensAutorizadas.remove(i);
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public void pesquisaPostagem() {
         // TODO
     }
 
-    public void pesquisaPostagem(){
-        // TODO
-    }
-
-    public void salvaPostagensCSV(){
+    public void salvaPostagensCSV() {
         // TODO
     }
 
