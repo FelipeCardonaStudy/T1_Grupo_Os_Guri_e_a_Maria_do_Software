@@ -58,8 +58,27 @@ public class App {
                     }
                     break;
                 case "4":
-                    pesquisaPostagem();
-                    break;
+                    System.out.println("Escolha a opção desejada: ");
+                    System.out.println("1: Pesquisar comentários");
+                    System.out.println("2: Pesquisar postagens por tag");
+                    String op = teclado.nextLine();
+                    switch (op) {
+                        case "1":
+                        System.out.print("Digite uma busca: ");
+                        String palavra_chave_1 = teclado.nextLine();
+                        if (!pesquisaComentarios(palavra_chave_1))
+                        System.out.println("\nNada encontrado com " + palavra_chave_1 + "\n");
+                        break;
+                        case "2":
+                        System.out.print("Digite uma busca: ");
+                        String palavra_chave_2 = teclado.nextLine();
+                        if (!pesquisaPostagemPorTags(palavra_chave_2))
+                        System.out.println("\nNada encontrado com " + palavra_chave_2 + "\n");
+                        break;
+                        default:
+                        System.out.println("Valor digitado incorreto, tente novamente:");
+                }
+                break;
                 case "5":
                     dados.toCSV();
                     break;
@@ -140,8 +159,41 @@ public class App {
         return false;
     }
 
-    public void pesquisaPostagem() {
-        // TODO
+    // Pesquisa posts por comentarios
+    public boolean pesquisaComentarios(String palavra_chave) {
+        int count = 0;
+        for (int i = 0; i < dados.postagensAutorizadasLength(); i++)
+        {
+            if (dados.postagensAutorizadas.get(i) != null)
+            for (int j = 0; j < dados.postagensAutorizadas.get(i).getComentariosLength(); j++)
+            {
+                if (dados.postagensAutorizadas.get(i).getComentarioAtIndex(j).contains(palavra_chave))
+                count++;
+                System.out.println(dados.postagensAutorizadas.get(i).getComentarioAtIndex(j).toString());
+            }
+        }
+        if (count > 0)
+        return true;
+        return false;
+    }
+
+    // Pesquisa posts por tags
+    public boolean pesquisaPostagemPorTags(String palavra_chave) {
+        int count = 0;
+        for (int i = 0; i < dados.postagensAutorizadasLength(); i++)
+        {
+            if (dados.postagensAutorizadas.get(i).getTag() != null)
+            {
+                if (dados.postagensAutorizadas.get(i).getTag().name().toLowerCase().equals(palavra_chave.toLowerCase()))
+                {
+                    count++;
+                    System.out.println(dados.postagensAutorizadas.get(i).toString());
+                }
+            }
+        }
+        if (count > 0)
+        return true;
+        return false;
     }
 
     public void salvaPostagensCSV() {
@@ -170,22 +222,6 @@ public class App {
         } else {
             System.out.println("Voce nao tem permissao para adicionar usuarios.\n");
         }
-    }
-
-    // Escreve lista de usuários do sistema
-    private boolean menuUsuario(Dados dados) {
-        System.out.println("\nEscolha o Usuário:");
-        System.out.println("-----------------------------");
-
-        try {
-            for (int i = 0; i < dados.getUserLength(); i++) {
-                System.out.println("(" + i + 1 + ") User @" + dados.getUserNameByIndex(i));
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Ainda não há nenhum usuário (!)");
-            return false;
-        }
-        return true;
     }
 
     public void logPostagensProibidas(){
