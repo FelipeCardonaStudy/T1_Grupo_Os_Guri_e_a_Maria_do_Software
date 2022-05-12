@@ -3,11 +3,6 @@ import java.io.*;
 
 public class Dados {
 
-    private final int MAX_SIZE_USERS = 10;
-    private final int MAX_SIZE_POSTS = 100;
-    private Usuario[] user = new Usuario[MAX_SIZE_USERS];
-    private Postagem[] post = new Postagem[MAX_SIZE_POSTS];
-
     Usuario usuarioAtivo;
 
     ArrayList<Usuario> usuarios = new ArrayList<>(); //Arraylist de usuários.
@@ -56,29 +51,15 @@ public class Dados {
     }
 
 
-    /**
-     * Return integer representative of user's array length
-     * @return int user.length
-     */
-    public int getUserLength() {
-        return user.length;
+    public int postagensAutorizadasLength() {
+        return postagensAutorizadas.size();
     }
 
-    /**
-     * Return integer representative of post's array length
-     * @return int post.length
-     */
-    public int getPostLength() {
-        return post.length;
+
+    public int postagensNaoAutorizadasLength() {
+        return postagensNaoAutorizadas.size();
     }
 
-    /**
-     * Return String representative of user's name attribute
-     * @return String Usuario.nome
-     */
-    public String getUserNameByIndex(int index) {
-        return user[index].getNome();
-    }
 
     public void mostraListaUsuarios() {
         for (Usuario usuario : usuarios) {

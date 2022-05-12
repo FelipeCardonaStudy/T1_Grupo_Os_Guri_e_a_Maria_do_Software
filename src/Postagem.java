@@ -74,18 +74,15 @@ public class Postagem
     public String toString() {
         if(tag == null)
         {
-            return "Postagem{identificador da postagem='" + identificador + '\'' +
-                    ", " + usuario +
-                    ", data='" + data + '\'' +
-                    ", texto='" + texto + '\'' +
-                    '}';
+            return "------------------------------------------------\n" +
+                   usuario.getNome() + "\t\t\t" + data + "\n" +
+                   "-> " + texto + "\n";
         }
-        return "Postagem{identificador da postagem='" + identificador + '\'' +
-                ", " + usuario +
-                ", data='" + data + '\'' +
-                ", texto='" + texto + '\'' +
-                ", tag='" + tag + '\'' +
-                '}';
+        return "------------------------------------------------\n" +
+               usuario.getNome() + "\t\t\t" + data + "\n" +
+               "-> " + texto + "\n" +
+               "Tags:\n" +
+               "[" + tag + "]\n";
     }
 
     public Usuario getUsuario() {
@@ -133,6 +130,14 @@ public class Postagem
     }
     public void setIdentificador(int identificador){
         this.identificador = identificador;
+    }
+
+    public String getComentarioAtIndex(int index) {
+        return comentarios.get(index).getComentarioString();
+    }
+
+    public int getComentariosLength() {
+        return comentarios.size();
     }
 
 
