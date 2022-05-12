@@ -30,14 +30,17 @@ public class App {
                     break;
                 case "2":
                     listaPostagens();
-                    System.out.println("Deseja adicionar um comentario?");
+                    System.out.println("\nDeseja adicionar um comentario?");
                     System.out.println("Se sim, digite 1");
-                    System.out.println("Se não, digite 2");
+                    System.out.println("Para voltar ao menu principal, digite outra tecla.");
 
-                    int respostaTeclado = teclado.nextInt();
+                    String respostaTeclado = teclado.nextLine();
+                    int respostaTecladoInteiro = Integer.parseInt(respostaTeclado);
 
-                    if (respostaTeclado == 1) {
+                    if (respostaTecladoInteiro == 1) {
                         adicionaComentario();
+                    } else {
+                        System.out.println("");
                     }
                     break;
                 case "3":
@@ -51,9 +54,8 @@ public class App {
                         break;
 
                     } else {
-                        System.out.println("Erro, não foi possível excluir a postagem");
+                        System.out.println("Erro, não foi possível excluir a postagem.");
                     }
-
                     break;
                 case "4":
                     pesquisaPostagem();
@@ -200,7 +202,8 @@ public class App {
 
     private void adicionaComentario(){
         Scanner teclado = new Scanner (System.in);
-        System.out.println("Em qual postagem você deseja adicionar um comentário? (informar identificador da postagem)");
+        System.out.println("Em qual postagem você deseja adicionar um comentário?");
+        System.out.println("(Favor informar identificador da postagem)");
         int idPostagemComentario = teclado.nextInt();
 
         for (Postagem postagem : dados.postagensAutorizadas){
@@ -212,7 +215,7 @@ public class App {
                 boolean comentarioValido = true;
 
                 for (String palavraProibida : postagem.getPalavrasProibidas()) {
-                    if (textoDoComentario.contains(palavraProibida)){
+                    if (textoDoComentario.toUpperCase().contains(palavraProibida.toUpperCase())){
                         comentarioValido = false;
                         System.out.println("Comentário inválido.\n");
                     }
