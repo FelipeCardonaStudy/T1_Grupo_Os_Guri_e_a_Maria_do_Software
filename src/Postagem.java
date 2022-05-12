@@ -74,14 +74,14 @@ public class Postagem
     public String toString() {
         if(tag == null)
         {
-            return "Postagem{" +
-                    usuario +
+            return "Postagem{identificador da postagem='" + identificador + '\'' +
+                    ", " + usuario +
                     ", data='" + data + '\'' +
                     ", texto='" + texto + '\'' +
                     '}';
         }
-        return "Postagem{" +
-                usuario +
+        return "Postagem{identificador da postagem='" + identificador + '\'' +
+                ", " + usuario +
                 ", data='" + data + '\'' +
                 ", texto='" + texto + '\'' +
                 ", tag='" + tag + '\'' +
@@ -147,9 +147,16 @@ public class Postagem
         return false;
     }
 
-    public static ArrayList<String> getPalavrasProibidas()
+    public ArrayList<String> getPalavrasProibidas()
     {
         return palavrasProibidas;
     }
 
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
 }
