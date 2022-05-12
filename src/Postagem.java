@@ -147,9 +147,16 @@ public class Postagem
         return false;
     }
 
-    public static ArrayList<String> getPalavrasProibidas()
+    public ArrayList<String> getPalavrasProibidas()
     {
         return palavrasProibidas;
     }
 
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
 }
