@@ -140,6 +140,13 @@ public class Postagem implements Comparable<Postagem>{
         this.identificador = identificador;
     }
 
+    public String getComentarioAtIndex(int index) {
+        return comentarios.get(index).getComentarioString();
+    }
+
+    public int getComentariosLength() {
+        return comentarios.size();
+    }
 
     // IMPLEMENTAR O METODO NO MENU, VERIFICAR SWITCH PARA ADICIONAR MAIS OPCOES.
     public static boolean addPalavraProibida(String palavra, Usuario user)

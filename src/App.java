@@ -34,14 +34,17 @@ public class App {
                     break;
                 case "2":
                     listaPostagens();
-                    System.out.println("Deseja adicionar um comentario?");
+                    System.out.println("\nDeseja adicionar um comentario?");
                     System.out.println("Se sim, digite 1");
-                    System.out.println("Se não, digite 2");
+                    System.out.println("Para voltar ao menu principal, digite outra tecla.");
 
-                    int respostaTeclado = teclado.nextInt();
+                    String respostaTeclado = teclado.nextLine();
+                    int respostaTecladoInteiro = Integer.parseInt(respostaTeclado);
 
-                    if (respostaTeclado == 1) {
+                    if (respostaTecladoInteiro == 1) {
                         adicionaComentario();
+                    } else {
+                        System.out.println("");
                     }
                     break;
                 case "3":
@@ -55,13 +58,32 @@ public class App {
                         break;
 
                     } else {
-                        System.out.println("Erro, não foi possível excluir a postagem");
+                        System.out.println("Erro, não foi possível excluir a postagem.");
                     }
 
                     break;
                 case "4":
-                    pesquisaPostagem();
-                    break;
+                    System.out.println("Escolha a opção desejada: ");
+                    System.out.println("1: Pesquisar comentários");
+                    System.out.println("2: Pesquisar postagens por tag");
+                    String op = teclado.nextLine();
+                    switch (op) {
+                        case "1":
+                        System.out.print("Digite uma busca: ");
+                        String palavra_chave_1 = teclado.nextLine();
+                        if (!pesquisaComentarios(palavra_chave_1))
+                        System.out.println("\nNada encontrado com " + palavra_chave_1 + "\n");
+                        break;
+                        case "2":
+                        System.out.print("Digite uma busca: ");
+                        String palavra_chave_2 = teclado.nextLine();
+                        if (!pesquisaPostagemPorTags(palavra_chave_2))
+                        System.out.println("\nNada encontrado com " + palavra_chave_2 + "\n");
+                        break;
+                        default:
+                        System.out.println("Valor digitado incorreto, tente novamente:");
+                }
+                break;
                 case "5":
                     dados.toCSV();
                     break;
@@ -69,9 +91,12 @@ public class App {
                     adicionaAdmin();
                     break;
                 case "7":
-                        exibePainel();
+                    logPostagensProibidas();
                     break;
                 case "8":
+                        exibePainel();
+                    break;
+                case "9":
                     encerrarPrograma = true;
                     break;
                 default:
@@ -89,8 +114,9 @@ public class App {
         System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
         System.out.println("6: Adiciona funcao de administrador para usuario.");
-        System.out.println("7: Exibir painel com informacoes dos posts e usuarios. (Exclusivo para administradores)");
-        System.out.println("8: Encerrar o programa.\n");
+        System.out.println("7: Log das postagens probidas(Admin).");
+        System.out.println("8: Exibir painel com informacoes dos posts e usuarios. (Exclusivo para administradores)");
+        System.out.println("9: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -142,8 +168,41 @@ public class App {
         return false;
     }
 
-    public void pesquisaPostagem() {
-        // TODO
+    // Pesquisa posts por comentarios
+    public boolean pesquisaComentarios(String palavra_chave) {
+        int count = 0;
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++)
+        {
+            if (dados.postagensAutorizadas.get(i) != null)
+            for (int j = 0; j < dados.postagensAutorizadas.get(i).getQntdComentarios(); j++)
+            {
+                if (dados.postagensAutorizadas.get(i).getComentarioAtIndex(j).contains(palavra_chave))
+                count++;
+                System.out.println(dados.postagensAutorizadas.get(i).getComentarioAtIndex(j).toString());
+            }
+        }
+        if (count > 0)
+        return true;
+        return false;
+    }
+
+    // Pesquisa posts por tags
+    public boolean pesquisaPostagemPorTags(String palavra_chave) {
+        int count = 0;
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++)
+        {
+            if (dados.postagensAutorizadas.get(i).getTag() != null)
+            {
+                if (dados.postagensAutorizadas.get(i).getTag().name().toLowerCase().equals(palavra_chave.toLowerCase()))
+                {
+                    count++;
+                    System.out.println(dados.postagensAutorizadas.get(i).toString());
+                }
+            }
+        }
+        if (count > 0)
+        return true;
+        return false;
     }
 
     public void salvaPostagensCSV() {
@@ -174,25 +233,22 @@ public class App {
         }
     }
 
-    // Escreve lista de usuários do sistema
-    private boolean menuUsuario(Dados dados) {
-        System.out.println("\nEscolha o Usuário:");
-        System.out.println("-----------------------------");
-
-        try {
-            for (int i = 0; i < dados.getUserLength(); i++) {
-                System.out.println("(" + i + 1 + ") User @" + dados.getUserNameByIndex(i));
+    public void logPostagensProibidas(){
+        if(dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador){
+            for(int i = 0; i<dados.postagensNaoAutorizadas.size(); i++){
+                Postagem postagem = dados.postagensNaoAutorizadas.get(i);
+                System.out.println(postagem);
             }
-        } catch (NullPointerException e) {
-            System.out.println("Ainda não há nenhum usuário (!)");
-            return false;
         }
-        return true;
+        else{
+            System.out.println("Você não tem permissão para usar essa função.");
+        }
     }
 
     private void adicionaComentario(){
         Scanner teclado = new Scanner (System.in);
-        System.out.println("Em qual postagem você deseja adicionar um comentário? (informar identificador da postagem)");
+        System.out.println("Em qual postagem você deseja adicionar um comentário?");
+        System.out.println("(Favor informar identificador da postagem)");
         int idPostagemComentario = teclado.nextInt();
 
         for (Postagem postagem : dados.postagensAutorizadas){
@@ -204,7 +260,7 @@ public class App {
                 boolean comentarioValido = true;
 
                 for (String palavraProibida : postagem.getPalavrasProibidas()) {
-                    if (textoDoComentario.contains(palavraProibida)){
+                    if (textoDoComentario.toUpperCase().contains(palavraProibida.toUpperCase())){
                         comentarioValido = false;
                         System.out.println("Comentário inválido.\n");
                     }

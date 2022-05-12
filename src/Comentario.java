@@ -29,4 +29,15 @@ public class Comentario{
     public int getQntComentarios(){
         return count;
     }
+
+    public String getComentarioString() {
+        return comentario;
+    }
+
+    @Override
+    public String toString() {
+        return "-----------------------------------------------------\n"
+               + usuario + "\t\t\t" + data + "\n"
+               + "-> " + comentario + "\n";
+    }
 }
