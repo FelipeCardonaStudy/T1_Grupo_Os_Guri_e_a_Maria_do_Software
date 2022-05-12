@@ -74,14 +74,14 @@ public class Postagem
     public String toString() {
         if(tag == null)
         {
-            return "Postagem{" +
-                    usuario +
+            return "Postagem{identificador da postagem='" + identificador + '\'' +
+                    ", " + usuario +
                     ", data='" + data + '\'' +
                     ", texto='" + texto + '\'' +
                     '}';
         }
-        return "Postagem{" +
-                usuario +
+        return "Postagem{identificador da postagem='" + identificador + '\'' +
+                ", " + usuario +
                 ", data='" + data + '\'' +
                 ", texto='" + texto + '\'' +
                 ", tag='" + tag + '\'' +
