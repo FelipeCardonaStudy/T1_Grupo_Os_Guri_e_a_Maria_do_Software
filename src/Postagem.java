@@ -3,8 +3,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class Postagem
-{
+public class Postagem implements Comparable<Postagem>{
     private static int count = 1;
 
     private Usuario usuario;
@@ -163,5 +162,10 @@ public class Postagem
 
     public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    @Override
+    public int compareTo(Postagem p) {
+        return (p.getQntdComentarios() - this.getQntdComentarios());
     }
 }

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
@@ -239,17 +240,30 @@ public class App {
         System.out.println("Top 5 usuarios com mais postagens: ");
         top5UsuariosPostagens();
         System.out.println("Top 10 usuarios com mais comentarios: ");
+        top10UsuariosComentarios();
+        System.out.println("Top 5 postagens mais comentadas: ");
+
 
     }
 
     public void top5UsuariosPostagens(){
-        Collections.sort(dados.usuarios); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
+        ArrayList<Usuario> usuariosOrdenados = new ArrayList<>();
+        usuariosOrdenados = dados.usuarios;
+        Collections.sort(usuariosOrdenados); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
         int posicao = 1;
         Usuario u = new Usuario();
         for(int i = 0; i <= 5; i++){
-            u = dados.usuarios.get(i);
+            u = usuariosOrdenados.get(i);
             System.out.printf("\t%do Lugar: %s, %d post(s)\n", posicao, u.getNome(), u.getQntPostagens());
             posicao++;
         }
+    }
+
+    public void top10UsuariosComentarios(){
+
+    }
+
+    public void top5PostagensComentarios(){
+
     }
 }
