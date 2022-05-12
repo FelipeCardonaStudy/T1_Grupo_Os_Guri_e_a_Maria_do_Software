@@ -55,6 +55,9 @@ public class App {
                     adicionaAdmin();
                     break;
                 case "7":
+                    logPostagensProibidas();
+                    break;
+                case "8":
                     encerrarPrograma = true;
                     break;
                 default:
@@ -72,7 +75,8 @@ public class App {
         System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
         System.out.println("6: Adiciona funcao de administrador para usuario.");
-        System.out.println("7: Encerrar o programa.\n");
+        System.out.println("7: Log das Postagens Proibidas(Administrador).");
+        System.out.println("8: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -132,6 +136,18 @@ public class App {
         // TODO
     }
 
+    public void logPostagensProibidas(){
+        if(dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador){
+            for(int i = 0; i<dados.postagensNaoAutorizadas.size(); i++){
+                Postagem postagem = dados.postagensNaoAutorizadas.get(i);
+                System.out.println(postagem);
+            }
+        }
+        else{
+            System.out.println("Você não tem permissão para usar essa função.");
+        }
+    }
+
     public void adicionaAdmin() {
         if (dados.usuarioAtivo.getFuncao() == Usuario.FuncaoUsuario.Administrador) {
             System.out.println("---------------------------------");
@@ -171,5 +187,7 @@ public class App {
         }
         return true;
     }
+
+
 
 }
