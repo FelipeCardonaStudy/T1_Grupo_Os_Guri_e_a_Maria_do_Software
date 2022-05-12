@@ -1,10 +1,11 @@
 import java.io.IOException;
-import java.net.SocketPermission;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
+    Comentario comentario = new Comentario();
 
     public void executa() throws IOException {
         // TODO (pré-cadastro)
@@ -65,6 +66,9 @@ public class App {
                     adicionaAdmin();
                     break;
                 case "7":
+                        exibePainel();
+                    break;
+                case "8":
                     encerrarPrograma = true;
                     break;
                 default:
@@ -82,7 +86,8 @@ public class App {
         System.out.println("4: Pesquisar postagens ou comentários a partir de TAGS ou palavras-chave.");
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
         System.out.println("6: Adiciona funcao de administrador para usuario.");
-        System.out.println("7: Encerrar o programa.\n");
+        System.out.println("7: Exibir painel com informacoes dos posts e usuarios. (Exclusivo para administradores)");
+        System.out.println("8: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -209,6 +214,42 @@ public class App {
                     System.out.println("Comentário adicionado com sucesso.\n");
                 }
             }
+        }
+    }
+
+    public void exibePainel(){
+        if(dados.usuarioAtivo.getFuncao() != Usuario.FuncaoUsuario.Administrador){
+            System.out.println("Voce nao possui permissao para executar a operacao selecionada.\n");
+            return;
+        }
+        int totalPostagens = dados.postagensAutorizadas.size();
+        int totalComentarios = 0;
+        int totalUsuarios = dados.usuarios.size();
+
+
+
+        for(Postagem p : dados.postagensAutorizadas){
+            totalComentarios += p.getQntdComentarios();
+        }
+
+        System.out.println("--------------------");
+        System.out.println("Total de postagens: " + totalPostagens);
+        System.out.println("Total de comentarios: " + totalComentarios);
+        System.out.println("Total de Usuarios: " + totalUsuarios);
+        System.out.println("Top 5 usuarios com mais postagens: ");
+        top5UsuariosPostagens();
+        System.out.println("Top 10 usuarios com mais comentarios: ");
+
+    }
+
+    public void top5UsuariosPostagens(){
+        Collections.sort(dados.usuarios); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
+        int posicao = 1;
+        Usuario u = new Usuario();
+        for(int i = 0; i <= 5; i++){
+            u = dados.usuarios.get(i);
+            System.out.printf("\t%do Lugar: %s, %d post(s)\n", posicao, u.getNome(), u.getQntPostagens());
+            posicao++;
         }
     }
 }

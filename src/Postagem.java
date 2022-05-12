@@ -46,6 +46,7 @@ public class Postagem
         }
         identificador = count;
         count++;
+        usuario.incrementaQntdPostagens();
     }
 
     public Postagem(Usuario usuario, String texto, TagsPostagem tag)
@@ -68,6 +69,7 @@ public class Postagem
         }
         identificador = count;
         count++;
+        usuario.incrementaQntdPostagens();
     }
 
     @Override
@@ -152,6 +154,9 @@ public class Postagem
         return palavrasProibidas;
     }
 
+    public int getQntdComentarios(){
+        return comentarios.size();
+    }
     public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
