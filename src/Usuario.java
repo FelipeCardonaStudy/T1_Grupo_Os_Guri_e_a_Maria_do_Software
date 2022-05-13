@@ -1,10 +1,15 @@
-public class Usuario {
+public class Usuario implements Comparable<Usuario>{
 
     private static int count = 1;
 
     private int identificao;
     private String nome;
     private FuncaoUsuario funcao;
+
+    private int qntPostagens = 0;
+
+    private int qntComentarios = 0;
+
 
     public enum FuncaoUsuario {
         Funcionario, Administrador
@@ -15,6 +20,10 @@ public class Usuario {
         this.funcao = funcao;
         identificao = count;
         count++;
+    }
+
+    public Usuario(){
+
     }
 
     @Override
@@ -48,5 +57,27 @@ public class Usuario {
 
     public void setFuncao(FuncaoUsuario funcao) {
         this.funcao = funcao;
+    }
+
+    public void incrementaQntdPostagens(){
+        qntPostagens++;
+    }
+
+    public int getQntPostagens(){
+        return qntPostagens;
+    }
+
+    public int getQntComentarios(){
+        return qntComentarios;
+    }
+
+    public void incrementaQntdComentarios(){
+        qntComentarios++;
+    }
+
+
+    @Override
+    public int compareTo(Usuario u) {
+        return (u.getQntPostagens() - this.getQntPostagens());
     }
 }

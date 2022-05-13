@@ -1,10 +1,14 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.IOException;
-import java.net.SocketPermission;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
 public class App {
     Dados dados = new Dados();
+    private Comentario comentario = new Comentario();
+    private Usuario usuario = new Usuario();
 
     public void executa() throws IOException {
         // TODO (pré-cadastro)
@@ -56,6 +60,7 @@ public class App {
                     } else {
                         System.out.println("Erro, não foi possível excluir a postagem.");
                     }
+
                     break;
                 case "4":
                     System.out.println("Escolha a opção desejada: ");
@@ -89,6 +94,9 @@ public class App {
                     logPostagensProibidas();
                     break;
                 case "8":
+                        exibePainel();
+                    break;
+                case "9":
                     encerrarPrograma = true;
                     break;
                 default:
@@ -107,7 +115,8 @@ public class App {
         System.out.println("5: Salvar todas as suas postagens em um arquivo CSV.");
         System.out.println("6: Adiciona funcao de administrador para usuario.");
         System.out.println("7: Log das postagens probidas(Admin).");
-        System.out.println("8: Encerrar o programa.\n");
+        System.out.println("8: Exibir painel com informacoes dos posts e usuarios. (Exclusivo para administradores)");
+        System.out.println("9: Encerrar o programa.\n");
     }
 
     private void escolheUsuarioAtivo() {
@@ -162,10 +171,10 @@ public class App {
     // Pesquisa posts por comentarios
     public boolean pesquisaComentarios(String palavra_chave) {
         int count = 0;
-        for (int i = 0; i < dados.postagensAutorizadasLength(); i++)
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++)
         {
             if (dados.postagensAutorizadas.get(i) != null)
-            for (int j = 0; j < dados.postagensAutorizadas.get(i).getComentariosLength(); j++)
+            for (int j = 0; j < dados.postagensAutorizadas.get(i).getQntdComentarios(); j++)
             {
                 if (dados.postagensAutorizadas.get(i).getComentarioAtIndex(j).contains(palavra_chave))
                 count++;
@@ -180,7 +189,7 @@ public class App {
     // Pesquisa posts por tags
     public boolean pesquisaPostagemPorTags(String palavra_chave) {
         int count = 0;
-        for (int i = 0; i < dados.postagensAutorizadasLength(); i++)
+        for (int i = 0; i < dados.postagensAutorizadas.size(); i++)
         {
             if (dados.postagensAutorizadas.get(i).getTag() != null)
             {
@@ -264,6 +273,77 @@ public class App {
                     System.out.println("Comentário adicionado com sucesso.\n");
                 }
             }
+        }
+    }
+
+    public void exibePainel(){
+        if(dados.usuarioAtivo.getFuncao() != Usuario.FuncaoUsuario.Administrador){
+            System.out.println("Voce nao possui permissao para executar a operacao selecionada.\n");
+            return;
+        }
+        int totalPostagens = dados.postagensAutorizadas.size();
+        int totalComentarios = 0;
+        int totalUsuarios = dados.usuarios.size();
+
+
+
+        for(Postagem p : dados.postagensAutorizadas){
+            totalComentarios += p.getQntdComentarios();
+        }
+
+        System.out.println("--------------------");
+        System.out.println("Total de postagens: " + totalPostagens);
+        System.out.println("Total de comentarios: " + totalComentarios);
+        System.out.println("Total de Usuarios: " + totalUsuarios);
+        System.out.println("Top 5 usuarios com mais postagens: ");
+        top5UsuariosPostagens();
+        System.out.println("\nTop 10 usuarios com mais comentarios: ");
+        top10UsuariosComentarios();
+        System.out.println("\nTop 5 postagens mais comentadas: ");
+        top5PostagensComentarios();
+        System.out.println("--------------------");
+        }
+
+    public void top5UsuariosPostagens(){
+        ArrayList<Usuario> usuariosOrdenados;
+        usuariosOrdenados = dados.usuarios;
+        Collections.sort(usuariosOrdenados); //ordenar a lista de usuarios em ordem DECRESCENTE de acordo com a quantidade de postagens
+
+        int posicao = 1;
+        new Usuario();
+        Usuario u;
+        for(int i = 0; i <= 5; i++){
+            u = usuariosOrdenados.get(i);
+            System.out.printf("\t%do Lugar: %s, %d post(s).\n", posicao, u.getNome(), u.getQntPostagens());
+            posicao++;
+        }
+    }
+
+    public void top10UsuariosComentarios(){
+        ArrayList<Usuario> usuariosOrdenadosPorComentarios;
+        usuariosOrdenadosPorComentarios = dados.usuarios;
+        Collections.sort(usuariosOrdenadosPorComentarios);
+
+        int posicao = 1;
+        Usuario u;
+        for(int i = 0; i < 10; i++){
+            u = usuariosOrdenadosPorComentarios.get(i);
+            System.out.printf("\t%do Lugar: %s, %d comentario(s).\n", posicao, u.getNome(), u.getQntComentarios());
+            posicao++;
+        }
+    }
+
+    public void top5PostagensComentarios(){
+        ArrayList<Postagem> postagensOrdenadasPorComentarios;
+        postagensOrdenadasPorComentarios = dados.postagensAutorizadas;
+        Collections.sort(postagensOrdenadasPorComentarios); //ordenar a lista de postagens em ordem DECRESCENTE de acordo com a uantidade de comentarios
+
+        int posicao = 1;
+        Postagem p = new Postagem();
+        for(int i = 0; i <= 5; i++){
+            p = postagensOrdenadasPorComentarios.get(i);
+            System.out.printf("\t%do Lugar: Identificador: %d (%d comentarios).\n", posicao, p.getIdentificador(), p.getQntdComentarios());
+            posicao++;
         }
     }
 }
